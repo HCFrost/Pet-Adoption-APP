@@ -1,5 +1,6 @@
 
 
+
 class Cat {
     constructor(name){
         this.name = name;
@@ -21,7 +22,7 @@ class CatStats {
 }
 
 class CatService {
-    static url = "https://crudcrud.com/api/d40cbb6ad5a44e7d81ff0dc1e06c1090/cats" //Insert CrudCrud link here!
+    static url = "https://cors-anywhere.herokuapp.com/https://62192b2081d4074e85a3c398.mockapi.io/cats"; //Insert CrudCrud link here!
 
 
     static getAllCats(){
@@ -38,7 +39,7 @@ class CatService {
     }
 
     static updateCat(cat) {
-        return $.ajax({ //If you get a cors error, try fetch instead.
+        return $.ajax=({ //If you get a cors error, try fetch instead.
             url: this.url + `/${cat._id}`,
             dataType: "json",
             data: JSON.stringify(cat),
@@ -77,7 +78,7 @@ class DOMManager {
                 return CatService.getAllCats();
             })
             .then((cats) => this.render(cats));
-    }
+    };
 
     static addStats(id) {
         for (let cat of this.cats) {
@@ -151,7 +152,7 @@ class DOMManager {
             }
         }
     }
-}
+};
 
 $("#create-new-cat").click(() => {
     console.log("Testing to see if button works.");
