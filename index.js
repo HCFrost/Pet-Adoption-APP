@@ -140,7 +140,9 @@ class DOMManager {
                 </div>
                 </div> <br>`
             );
-            for(let stat of cat.stats) {
+            var map = new Map
+            map.set(cat, cat.stats)
+            for(let stat of map.keys()) {
                 $(`${cat._id}`).find(".card-body").append(
                     `<p>
                     <span id="breed-${stat._id}"><strong>Name: </strong> ${stat.name} </span>
