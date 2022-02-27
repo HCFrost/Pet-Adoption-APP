@@ -18,8 +18,7 @@ class ReptileStats {
 }
 
 class ReptileService {
-    static url = "https://cors-anywhere.herokuapp.com/https://621acaa7faa12ee450fea912.mockapi.io/Reptiles"; //Insert CrudCrud link here!
-
+    static url = "https://cors-anywhere.herokuapp.com/https://621acaa7faa12ee450fea912.mockapi.io/Reptiles";
 
     static getAllReptiles(){
         return $.get(this.url);
@@ -35,7 +34,7 @@ class ReptileService {
     }
 
     static updateReptile(reptile) {
-        return $.ajax=({ //If you get a cors error, try fetch instead.
+        return $.ajax=({
             url: this.url + `/${reptile.id}/Stats`,
             dataType: "json",
             data: JSON.stringify(reptile),
@@ -75,7 +74,7 @@ class DOMManager {
             .then((reptiles) => this.render(reptiles));
     };
 
-    static addStats(id,reptiles) {
+    static addStats(id) {
         for (let reptile of this.reptiles) {
             if(reptile.id == id) {
                 reptile.push(new ReptileStats(`#${reptile.id}-breed`).value(), reptile.stats.push(new ReptileStats(`#${reptile.id}-age`).val()), reptile.stats.push(new ReptileStats(`#${reptile.id}-weight`).val()));
