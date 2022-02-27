@@ -22,7 +22,7 @@ class CatStats {
 }
 
 class CatService {
-    static url = "https://cors-anywhere.herokuapp.com/https://62192b2081d4074e85a3c398.mockapi.io/cats"; //Insert CrudCrud link here!
+    static url = "https://cors-anywhere.herokuapp.com/https://62192b2081d4074e85a3c398.mockapi.io/cats"; //Api link here! Heroku included.
 
 
     static getAllCats(){
@@ -40,7 +40,7 @@ class CatService {
 
     static updateCat(cat) {
         return $.ajax=({ //If you get a cors error, try fetch instead.
-            url: this.url + `/${cat._id}`,
+            url: this.url + `/${cat.id}`,
             dataType: "json",
             data: JSON.stringify(cat),
             contentType: "application/json",
@@ -73,17 +73,20 @@ class DOMManager {
     }
 
     static deleteCat(id){
+        console.log("Delete button has been called.")
         CatService.deleteCat(id)
             .then(() => {
                 return CatService.getAllCats();
             })
-            .then((cats) => this.render(cats));
-    };
+            .then((cats) => this.render(cats))
+         
+        };
+        
 
     static addStats(id) {
         for (let cat of this.cats) {
-            if(cat._id == id) {
-                cat.stats.push(new CatStats(`#${cat._id}-breed`).val(), cat.stats.push(new CatStats(`#${cat._id}-age`).val()), cat.stats.push(new CatStats(`#${cat._id}-weight`).val()));
+            if(cat.id == id) {
+                cat.push(new CatStats(`#${cat.id}-breed`).value(), cat.stats.push(new CatStats(`#${cat.id}-age`).val()), cat.stats.push(new CatStats(`#${cat.id}-weight`).val()));
                 CatService.updateCat(cat)
                 .then(() => {
                     return CatService.getAllCats();
@@ -116,26 +119,26 @@ class DOMManager {
 
         for(let cat of cats) {
             $('#app-cat').prepend(
-                `<div id="${cat._id}" class="card">
+                `<div id="${cat.id}" class="card">
                 <div class="card-header">
                     <h2>${cat.name}</h2>
-                    <button class="btn btn-primary" onclick="DOMManager.deleteCat("${cat._id}")">Delete</button>
+                    <button class="btn btn-primary" onclick="DOMManager.deleteCat('${cat.id}')">Delete</button>
 
                 </div>
                 <div class="card-body">
                  <div class="card">
                     <div class="row">
                         <div class="col-sm">
-                        <input type="text" id="${cat._id}-breed" class="form-control" placeholder="Cat Breed">
+                        <input type="text" id="${cat.id}-breed" class="form-control" placeholder="Cat Breed">
                         </div>
                         <div class="col-sm">
-                        <input type="text" id="${cat._id}-age" class="form-control" placeholder="Cat Age">
+                        <input type="text" id="${cat.id}-age" class="form-control" placeholder="Cat Age">
                         </div>
                         <div class="col-sm">
-                        <input type="text" id="${cat._id}-weight" class="form-control" placeholder="Cat Weight (lb)">
+                        <input type="text" id="${cat.id}-weight" class="form-control" placeholder="Cat Weight (lb)">
                         </div>
                     </div>
-                    <button id="${cat._id}-add-stats" onclick="DOMManager.addStats("${cat._id}")" class="btn btn-primary form-control">Add Pet Stats</button>
+                    <button id="${cat.id}-add-stats" onclick="DOMManager.addStats('${cat.id}')" class="btn btn-primary form-control">Add Pet Stats</button>
                  </div>
                 </div>
                 </div> <br>`
@@ -143,11 +146,11 @@ class DOMManager {
             var map = new Map
             map.set(cat, cat.stats)
             for(let stat of map.keys()) {
-                $(`${cat._id}`).find(".card-body").append(
+                $(`${cat.id}`).find(".card-body").append(
                     `<p>
-                    <span id="breed-${stat._id}"><strong>Name: </strong> ${stat.name} </span>
-                    <span id="age-${stat._id}"><strong>Age: </strong> ${stat.age} </span>
-                    <span id="weight-${stat._id}"><strong>Name: </strong> ${stat.weight} </span>
+                    <span id="breed-${stat.id}"><strong>Name: </strong> ${cat.breed} </span>
+                    <span id="age-${stat.id}"><strong>Age: </strong> ${cat.age} </span>
+                    <span id="weight-${stat.id}"><strong>Name: </strong> ${cat.weight} </span>
                     <button class="btn btn-warning" onclick="DOMManager.deleteStats("${cat._id}", "${stat._id}")">Delete Pet Stats</button>
                     `
                 )
