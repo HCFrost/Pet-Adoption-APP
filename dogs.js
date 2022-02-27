@@ -19,8 +19,7 @@ class DogStats {
 }
 
 class DogService {
-    static url = "https://crudcrud.com/api/d40cbb6ad5a44e7d81ff0dc1e06c1090/dogs" //Insert CrudCrud link here!
-
+    static url = "https://cors-anywhere.herokuapp.com/https://621977a381d4074e85aa6514.mockapi.io/dogs" //Insert CrudCrud link here!
     static getAllDogs(){
         return $.get(this.url);
     }
@@ -30,7 +29,7 @@ class DogService {
     }
 
     static createDog(dog) {
-        //console.log("Dog created");
+        console.log("Dog created");
         return $.post(this.url, dog);
     }
 
@@ -60,7 +59,7 @@ class DOMManager {
     }
 
     static createDog(name){
-        //console.log("DomDog Called")
+        console.log("DomDog Called")
         DogService.createDog(new Dog(name))
             .then(() => {
                 return DogService.getAllDogs();
@@ -136,7 +135,9 @@ class DOMManager {
                 </div>
                 </div> <br>`
             );
-            for(let stat of dog.stats) {
+            var map = new Map
+            map.set(dog, dog.stats)
+            for(let stat of map.keys()) {
                 $(`${dog._id}`).find(".card-body").append(
                     `<p>
                     <span id="breed-${stat._id}"><strong>Name: </strong> ${stat.name} </span>
@@ -151,7 +152,7 @@ class DOMManager {
 }
 
 $("#create-new-dog").click(() => {
-    //console.log("Testing to see if button works.");
+    console.log("Testing to see if button works.");
     DOMManager.createDog($("#new-dog-name").val());
     $("#new-dog-name").val("");
 });
